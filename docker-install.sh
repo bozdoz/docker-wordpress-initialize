@@ -1,21 +1,13 @@
 #!/bin/sh
 set -euo pipefail
 
-if [[ -f wp-config.php && -f .cli-initialized ]]; then
-    exit 0
-fi
-
 if [ ! -f wp-config.php ]; then
     echo "WordPress not found in $PWD!"
     ( set -x; sleep 15 )
 fi
 
-if [ ! -f .cli-initialized ]; then
+if ! $(wp core is-installed); then
     echo "Initializing WordPress install!"
-
-    echo $WP_URL
-    echo $WP_USER
-    echo $WP_EMAIL
 
     wp core install \
         --url="$WP_URL" \
@@ -35,6 +27,4 @@ if [ ! -f .cli-initialized ]; then
     wp theme activate $WP_THEME
 
     wp rewrite structure '/%postname%/'
-
-    touch .cli-initialized
 fi
