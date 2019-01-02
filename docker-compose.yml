@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+  db:
+    image: mariadb
+    volumes:
+      - db_volume:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+
+  cli:
+    build: .
+    env_file: .env
+    depends_on:
+      - db
+    volumes: 
+      - wp_volume:/var/www/html
+
+  wordpress:
+    image: wordpress
+    depends_on:
+      - cli
+    volumes:
+      - wp_volume:/var/www/html
+    ports:
+      - ${WP_PORT:-1234}:80
+    restart: always
+    environment:
+      WORDPRESS_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+      WORDPRESS_DB_HOST: db:3306
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - db
+  
+volumes:
+  db_volume:
+  wp_volume:
