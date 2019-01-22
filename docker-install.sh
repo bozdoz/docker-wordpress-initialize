@@ -27,4 +27,6 @@ if ! $(wp core is-installed); then
     wp theme activate $WP_THEME
 
     wp rewrite structure '/%postname%/'
+    
+    chown -R xfs:xfs .
 fi
