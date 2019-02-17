@@ -1,6 +1,6 @@
 # docker-wordpress-initialize
 
-Initialize WordPress database in Docker with WP-CLI and an install script
+Initialize WordPress site in Docker with WP-CLI and an install script
 
 ### Usage
 
