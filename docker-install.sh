@@ -29,6 +29,10 @@ if ! $(wp core is-installed); then
     wp theme install $WP_THEME --activate
     
     wp plugin delete akismet hello
+    
+    if [ ! -z "$WP_PLUGINS" ]; then
+        wp plugin install $WP_PLUGINS --activate
+    fi
 
     wp rewrite structure '/%postname%/'
     
