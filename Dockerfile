@@ -8,7 +8,8 @@ ENV WP_URL="localhost:$WP_PORT" \
   WP_TITLE=WordPress \
   WP_DESCRIPTION="Just another WordPress Site" \
   WP_DEBUG=true \
-  WP_THEME=twentynineteen
+  WP_THEME=twentynineteen \
+  WP_PLUGINS=
 
 COPY docker-install.sh /usr/local/bin/
 
