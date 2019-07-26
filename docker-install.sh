@@ -19,6 +19,8 @@ if ! $(wp core is-installed); then
         --skip-plugins
         
     wp core update
+    
+    wp core update-db
 
     wp option update blogdescription "$WP_DESCRIPTION"
     
