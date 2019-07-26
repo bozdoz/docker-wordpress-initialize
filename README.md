@@ -6,8 +6,8 @@ Initialize WordPress site in Docker with WP-CLI and an install script
 
 #### docker-compose.yml
 
-```
-version: '3.3'
+```yml
+version: '3.4'
 
 services:
   db:
@@ -45,7 +45,7 @@ volumes:
 
 #### .env
 
-```
+```bash
 WP_PORT=1234
 WP_URL=localhost:1234
 WP_USER=admin
@@ -55,6 +55,7 @@ WP_TITLE=WordPress
 WP_DESCRIPTION=Just Another WordPress Blog
 WP_DEBUG=true
 WP_THEME=twentynineteen
+WP_PLUGINS="leaflet-map quote-tweet"
 ```
 
 ## But Why
@@ -62,3 +63,32 @@ WP_THEME=twentynineteen
 This will auto-install WordPress, so you can `docker-compose down -v` and `docker-compose up` without having to re-install WordPress each time.
 
 You can also use this image to run [WP CLI commands](https://wp-cli.org/), like so: `docker-compose run cli wp plugin list` or `docker-compose run cli wp post create --post_type=post --post_title='New Post' --post_content='Another post' --post_status=publish`
+
+## Also
+
+You can execute any wp cli commands in a docker-posts.sh file:
+
+#### docker-posts.sh
+
+```bash
+wp post create \
+  --post_type=post \
+  --post_title='Leaflet Map' \
+  --post_content='[leaflet-map] [leaflet-marker]' \
+  --post_status='publish'
+```
+
+And add it to the container in a volume:
+
+#### docker-compose.yml
+
+```diff
+cli:
+  image: bozdoz/wordpress-initialize
+  env_file: .env
+  depends_on:
+    - db
+  volumes: 
+    - wp_volume:/var/www/html
++   - ./docker-posts.sh:/app/docker-posts.sh
+```
