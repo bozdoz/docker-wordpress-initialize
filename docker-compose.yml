@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 services:
   db:
@@ -29,13 +29,6 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
       WORDPRESS_DB_HOST: db:3306
-
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin:latest
-  #   ports:
-  #     - 8080:80
-  #   depends_on:
-  #     - db
   
 volumes:
   db_volume:

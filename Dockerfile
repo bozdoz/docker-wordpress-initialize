@@ -1,7 +1,7 @@
 FROM wordpress:cli
 
-ENV WP_PORT=1234
-ENV WP_URL="localhost:$WP_PORT" \
+# Default env
+ENV WP_URL="localhost:1234" \
   WP_USER=admin \
   WP_PASSWORD=password \
   WP_EMAIL=not@real.com \
@@ -10,12 +10,10 @@ ENV WP_URL="localhost:$WP_PORT" \
   WP_DEBUG=true \
   WP_THEME=twentynineteen
 
+# copy install script with permissions
 COPY docker-install.sh /usr/local/bin/
-
 USER root
-
 RUN chmod 755 /usr/local/bin/docker-install.sh
-
 RUN mv /usr/local/bin/wp /usr/local/bin/_wp && \
   echo -e '#!/bin/sh\n_wp --allow-root "$@"' > /usr/local/bin/wp && \
   chmod +x /usr/local/bin/wp
