@@ -66,9 +66,9 @@ You can also use this image to run [WP CLI commands](https://wp-cli.org/), like 
 
 ## Also
 
-You can execute any wp cli commands in a docker-posts.sh file:
+You can execute any script within the cli container with an initialize.sh file:
 
-#### docker-posts.sh
+#### initialize.sh
 
 ```bash
 wp post create \
@@ -90,5 +90,5 @@ cli:
     - db
   volumes: 
     - wp_volume:/var/www/html
-+   - ./docker-posts.sh:/app/docker-posts.sh
++   - ./initialize.sh:/app/initialize.sh
 ```
