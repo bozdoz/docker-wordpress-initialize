@@ -37,8 +37,8 @@ if ! $(wp core is-installed); then
     fi
     
     # custom initial posts/pages script
-    if [ -f /app/docker-posts.sh ]; then
-        sh /app/docker-posts.sh
+    if [ -f /app/initialize.sh ]; then
+        sh /app/initialize.sh
     fi
 
     # make everything owned by www-data
