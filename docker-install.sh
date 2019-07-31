@@ -3,7 +3,7 @@ set -euo pipefail
 
 if [ ! -f wp-config.php ]; then
     echo "WordPress not found in $PWD!"
-    ( set -x; sleep 15 )
+    ( set -x; sleep 18 )
 fi
 
 if ! $(wp core is-installed); then
