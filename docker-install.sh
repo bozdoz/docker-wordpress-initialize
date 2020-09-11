@@ -26,7 +26,8 @@ if ! $(wp core is-installed); then
     
     wp config set WP_DEBUG $WP_DEBUG --raw
     
-    wp theme install $WP_THEME --activate
+    wp theme install $WP_THEME
+    wp theme activate $WP_THEME
     
     wp rewrite structure '/%postname%/'
     
