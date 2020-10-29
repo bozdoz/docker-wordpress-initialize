@@ -1,5 +1,5 @@
 #!/bin/sh
-set -euo pipefail
+set -e
 
 if [ ! -f wp-config.php ]; then
     echo "WordPress not found in $PWD!"
@@ -32,7 +32,7 @@ if ! $(wp core is-installed); then
     wp rewrite structure '/%postname%/'
     
     wp plugin delete akismet hello
-    
+
     if [ -n "$WP_PLUGINS" ]; then
         wp plugin install $WP_PLUGINS
         wp plugin activate --all
