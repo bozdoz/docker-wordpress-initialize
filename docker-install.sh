@@ -44,5 +44,5 @@ if ! $(wp core is-installed); then
     fi
 
     # make everything owned by www-data
-    chown -R xfs:xfs .
+    chown -R xfs:xfs . || true
 fi
