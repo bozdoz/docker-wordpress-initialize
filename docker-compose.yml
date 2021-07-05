@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.9'
 
 services:
   db:
@@ -8,6 +8,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+      MYSQL_USER: ${WORDPRESS_DB_USER:-wordpress}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
 
   cli:
     build: .
@@ -27,8 +30,10 @@ services:
       - ${WP_PORT:-1234}:80
     restart: always
     environment:
-      WORDPRESS_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
       WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DATABASE: ${MYSQL_DATABASE:-wordpress}
   
 volumes:
   db_volume:
