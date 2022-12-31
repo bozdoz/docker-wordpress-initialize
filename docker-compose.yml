@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   db:
-    image: mariadb
+    image: mariadb:latest
     volumes:
       - db_volume:/var/lib/mysql
     restart: always
@@ -19,9 +19,14 @@ services:
       - db
     volumes: 
       - wp_volume:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DATABASE: ${MYSQL_DATABASE:-wordpress}
 
   wordpress:
-    image: wordpress
+    image: wordpress:latest
     depends_on:
       - cli
     volumes:
@@ -30,7 +35,7 @@ services:
       - ${WP_PORT:-1234}:80
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
       WORDPRESS_DATABASE: ${MYSQL_DATABASE:-wordpress}

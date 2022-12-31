@@ -16,14 +16,22 @@ services:
       - db_volume:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+      MYSQL_USER: ${WORDPRESS_DB_USER:-wordpress}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
 
   cli:
     image: bozdoz/wordpress-initialize
     env_file: .env
     depends_on:
       - db
-    volumes: 
+    volumes:
       - wp_volume:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DATABASE: ${MYSQL_DATABASE:-wordpress}
 
   wordpress:
     image: wordpress
@@ -35,9 +43,11 @@ services:
       - ${WP_PORT:-1234}:80
     restart: always
     environment:
-      WORDPRESS_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
-      WORDPRESS_DB_HOST: db:3306
-  
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DATABASE: ${MYSQL_DATABASE:-wordpress}
+
 volumes:
   db_volume:
   wp_volume:
@@ -85,10 +95,7 @@ And add it to the container in a volume:
 ```diff
 cli:
   image: bozdoz/wordpress-initialize
-  env_file: .env
-  depends_on:
-    - db
-  volumes: 
+  volumes:
     - wp_volume:/var/www/html
 +   - ./initialize.sh:/app/initialize.sh
 ```
