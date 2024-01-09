@@ -1,4 +1,4 @@
-FROM wordpress:cli-2.7.1-php8.0
+FROM wordpress:cli-2.9-php8.3
 
 # Default env
 ENV WP_URL="localhost:1234" \
