@@ -1,0 +1,17 @@
+name: DockerPushWorkflow
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bozdoz/auto-docker-push@v2
+        with:
+          image: bozdoz/wordpress-initialize
+          username: bozdoz
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
